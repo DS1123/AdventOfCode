@@ -1,6 +1,20 @@
 import numpy as np
 # Read directions $R , R, U , D , L .. e.t.c ,$ in a list assume both HT start at origin
-directions = ["R", "D", "D", "L" , "L", "L" , "L"] 
+import csv
+
+list1 = []
+
+with open('Day9.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=" ")
+    line_count = 0
+    for row in csv_reader:
+        list1.append(row)
+
+directions = ["L","L"]
+for i in range(1,len(list1)):
+    for ii in range( int((list1[i])[1]) ):
+        directions.append(list1[i][0])
+
 size = len(directions)
 HeadPos = np.array([0,0])
 TailPos = np.array([0,0])
@@ -21,7 +35,7 @@ def DrawGrid(TailPos, HeadPos):
             else:
                 print("*", end = "")
     print("\n\n")            
-DrawGrid(TailPos,HeadPos)
+#DrawGrid(TailPos,HeadPos)
 for i in range(size): 
     if directions[i] == "R" :
         change = np.array([1,0])
@@ -39,6 +53,6 @@ for i in range(size):
         TailPos = HeadPos - change
         if(not(TailPos.tolist() in UniqueListTailPos)):  
             UniqueListTailPos.append(TailPos.tolist()) 
-    DrawGrid(TailPos,HeadPos)
+ #   DrawGrid(TailPos,HeadPos)
 print("Number of unique tiles visited by Tails is ", len(UniqueListTailPos)) 
 
